@@ -1,0 +1,6 @@
+{
+  "name": "CallMe",
+  "description": "A native Android reminder app that calls you with simulated incoming-call experiences, exact alarm reliability, and offline voice playback.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

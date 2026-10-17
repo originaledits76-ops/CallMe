@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">CallMe</string>
+    <string name="default_caller_name">Personal Assistant</string>
+    <string name="simulate_call">Simulate Call</string>
+    <string name="add_reminder">Add Reminder</string>
+    <string name="edit_reminder">Edit Reminder</string>
+    <string name="reminder_title">Reminder Title</string>
+    <string name="reminder_notes">Notes (Optional)</string>
+    <string name="answer_call">Answer</string>
+    <string name="snooze">Snooze</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="complete">Complete</string>
+    <string name="incoming_reminder">Incoming Reminder Call</string>
+    <string name="channel_name">Reminder Calls</string>
+    <string name="channel_description">Full screen and heads-up notifications for scheduled reminders</string>
+</resources>
