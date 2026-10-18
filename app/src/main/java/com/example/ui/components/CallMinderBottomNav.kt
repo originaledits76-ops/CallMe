@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PhoneCallback
 import androidx.compose.material.icons.filled.PhoneInTalk
@@ -35,9 +36,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.MainNavigationTab
 import com.example.ui.theme.BackgroundColor
-import com.example.ui.theme.BorderLight
-import com.example.ui.theme.DarkNeutral
-import com.example.ui.theme.EmeraldGreen
+import com.example.ui.theme.CyberBorder
+import com.example.ui.theme.CyberCard
+import com.example.ui.theme.CyberNeonBlue
+import com.example.ui.theme.CyberNeonGreen
 import com.example.ui.theme.SubtleText
 
 @Composable
@@ -49,46 +51,42 @@ fun CallMinderBottomNav(
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .background(BackgroundColor.copy(alpha = 0.98f))
-            .border(width = 0.8.dp, color = BorderLight)
+            .background(BackgroundColor.copy(alpha = 0.96f))
+            .border(width = 1.dp, color = CyberBorder)
             .navigationBarsPadding()
-            .height(60.dp)
+            .height(64.dp)
             .testTag("callminder_bottom_nav")
     ) {
         Row(
-            modifier = Modifier.fillMaxWidth().height(60.dp),
+            modifier = Modifier.fillMaxWidth().height(64.dp),
             horizontalArrangement = Arrangement.SpaceAround,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            // Tab 1: Home
             BottomNavItem(
                 icon = Icons.Default.Schedule,
-                label = "Home",
+                label = "HOME",
                 isSelected = selectedTab == MainNavigationTab.HOME,
                 onClick = { onTabSelected(MainNavigationTab.HOME) }
             )
 
-            // Tab 2: New Call
             BottomNavItem(
                 icon = Icons.Default.PhoneCallback,
-                label = "New Call",
+                label = "NEW CALL",
                 isSelected = selectedTab == MainNavigationTab.NEW_CALL,
                 onClick = { onTabSelected(MainNavigationTab.NEW_CALL) }
             )
 
-            // Tab 3: Live Call (with emerald dot)
             BottomNavItem(
                 icon = Icons.Default.PhoneInTalk,
-                label = "Live Call",
+                label = "LIVE",
                 isSelected = selectedTab == MainNavigationTab.LIVE_CALL,
                 hasLiveDot = true,
                 onClick = { onTabSelected(MainNavigationTab.LIVE_CALL) }
             )
 
-            // Tab 4: History
             BottomNavItem(
                 icon = Icons.Default.ReceiptLong,
-                label = "History",
+                label = "HISTORY",
                 isSelected = selectedTab == MainNavigationTab.HISTORY,
                 onClick = { onTabSelected(MainNavigationTab.HISTORY) }
             )
@@ -105,7 +103,7 @@ private fun BottomNavItem(
     onClick: () -> Unit
 ) {
     val contentColor by animateColorAsState(
-        targetValue = if (isSelected) DarkNeutral else SubtleText,
+        targetValue = if (isSelected) CyberNeonBlue else SubtleText,
         label = "nav_item_color"
     )
 
@@ -117,25 +115,34 @@ private fun BottomNavItem(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = null
             ) { onClick() }
-            .padding(horizontal = 12.dp, vertical = 4.dp)
+            .padding(horizontal = 12.dp, vertical = 6.dp)
             .testTag("nav_item_${label.lowercase().replace(" ", "_")}")
     ) {
-        Box {
-            Icon(
-                imageVector = icon,
-                contentDescription = label,
-                tint = contentColor,
-                modifier = Modifier.size(22.dp)
-            )
-
-            if (hasLiveDot) {
-                Box(
-                    modifier = Modifier
-                        .size(6.dp)
-                        .clip(CircleShape)
-                        .background(EmeraldGreen)
-                        .align(Alignment.TopEnd)
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
+                .size(if (isSelected) 36.dp else 28.dp)
+                .clip(RoundedCornerShape(10.dp))
+                .background(if (isSelected) CyberCard else androidx.compose.ui.graphics.Color.Transparent)
+                .border(if (isSelected) 1.dp else 0.dp, if (isSelected) CyberNeonBlue else androidx.compose.ui.graphics.Color.Transparent, RoundedCornerShape(10.dp))
+        ) {
+            Box {
+                Icon(
+                    imageVector = icon,
+                    contentDescription = label,
+                    tint = contentColor,
+                    modifier = Modifier.size(20.dp)
                 )
+
+                if (hasLiveDot) {
+                    Box(
+                        modifier = Modifier
+                            .size(6.dp)
+                            .clip(CircleShape)
+                            .background(CyberNeonGreen)
+                            .align(Alignment.TopEnd)
+                    )
+                }
             }
         }
 
@@ -143,10 +150,10 @@ private fun BottomNavItem(
 
         Text(
             text = label,
-            fontSize = 10.sp,
-            fontWeight = if (isSelected) FontWeight.SemiBold else FontWeight.Normal,
+            fontSize = 9.sp,
+            fontWeight = FontWeight.ExtraBold,
             color = contentColor,
-            letterSpacing = (-0.2).sp
+            letterSpacing = 0.5.sp
         )
     }
 }
