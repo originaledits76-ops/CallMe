@@ -1,11 +1,11 @@
 <resources>
-    <string name="app_name">CallMe</string>
-    <string name="default_caller_name">Personal Assistant</string>
+    <string name="app_name">CallMinder</string>
+    <string name="default_caller_name">Maya</string>
     <string name="simulate_call">Simulate Call</string>
-    <string name="add_reminder">Add Reminder</string>
-    <string name="edit_reminder">Edit Reminder</string>
-    <string name="reminder_title">Reminder Title</string>
-    <string name="reminder_notes">Notes (Optional)</string>
+    <string name="add_reminder">Schedule Call</string>
+    <string name="edit_reminder">Edit Call</string>
+    <string name="reminder_title">Call Purpose</string>
+    <string name="reminder_notes">Message Script</string>
     <string name="answer_call">Answer</string>
     <string name="snooze">Snooze</string>
     <string name="dismiss">Dismiss</string>

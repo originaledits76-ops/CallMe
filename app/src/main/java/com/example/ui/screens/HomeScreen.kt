@@ -24,6 +24,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Call
 import androidx.compose.material.icons.filled.NotificationsActive
+import androidx.compose.material.icons.filled.Verified
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FilterChip
@@ -57,6 +58,7 @@ import com.example.ui.theme.OffWhite
 import com.example.ui.theme.PureWhite
 import com.example.ui.theme.SoftGraySurface
 import com.example.ui.theme.SolidBlack
+import com.example.ui.theme.SophisticatedBlue
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -146,6 +148,50 @@ fun HomeScreen(
                         fontWeight = FontWeight.Bold,
                         color = SolidBlack
                     )
+                }
+            }
+
+            // Free & Ad-Free / Volume Shortcut Banner
+            item {
+                Card(
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(16.dp),
+                    colors = CardDefaults.cardColors(containerColor = SoftGraySurface),
+                    border = CardDefaults.outlinedCardBorder().copy(brush = androidx.compose.ui.graphics.SolidColor(CardBorderGray))
+                ) {
+                    Row(
+                        modifier = Modifier.padding(16.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        Box(
+                            contentAlignment = Alignment.Center,
+                            modifier = Modifier
+                                .size(36.dp)
+                                .clip(CircleShape)
+                                .background(SophisticatedBlue)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Verified,
+                                contentDescription = null,
+                                tint = PureWhite,
+                                modifier = Modifier.size(20.dp)
+                            )
+                        }
+                        Column {
+                            Text(
+                                text = "100% Free & Ad-Free • Unlimited Calls",
+                                style = androidx.compose.material3.MaterialTheme.typography.titleMedium,
+                                fontWeight = FontWeight.Bold,
+                                color = SolidBlack
+                            )
+                            Text(
+                                text = "Tip: Double-press volume up/down anytime to trigger an instant fake call test.",
+                                style = androidx.compose.material3.MaterialTheme.typography.bodySmall,
+                                color = MutedTextGray
+                            )
+                        }
+                    }
                 }
             }
 

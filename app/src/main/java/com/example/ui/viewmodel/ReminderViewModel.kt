@@ -18,6 +18,7 @@ class ReminderViewModel(application: Application) : AndroidViewModel(application
     private val repository = ReminderRepository(application)
 
     val allReminders: StateFlow<List<ReminderEntity>> = repository.allReminders
+        .map { list -> list.sortedBy { it.targetTimestamp } }
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),
@@ -25,6 +26,7 @@ class ReminderViewModel(application: Application) : AndroidViewModel(application
         )
 
     val activeReminders: StateFlow<List<ReminderEntity>> = repository.activeReminders
+        .map { list -> list.sortedBy { it.targetTimestamp } }
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),

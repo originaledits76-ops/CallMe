@@ -22,6 +22,6 @@ dependencyResolutionManagement {
   }
 }
 
-rootProject.name = "CallMe"
+rootProject.name = "CallMinder"
 
 include(":app")

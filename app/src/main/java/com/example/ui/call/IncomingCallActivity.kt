@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -44,6 +45,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Call
 import androidx.compose.material.icons.filled.CallEnd
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Dialpad
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Snooze
@@ -769,6 +771,9 @@ fun ActiveCallActionButtons(
     onSnooze: (Int) -> Unit,
     onEndCall: () -> Unit
 ) {
+    var showDialpad by remember { mutableStateOf(false) }
+    val context = LocalContext.current
+
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -799,19 +804,39 @@ fun ActiveCallActionButtons(
             )
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(14.dp))
 
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(12.dp)
+            horizontalArrangement = Arrangement.spacedBy(10.dp)
         ) {
+            OutlinedButton(
+                onClick = { showDialpad = true },
+                modifier = Modifier
+                    .weight(1f)
+                    .height(48.dp)
+                    .testTag("open_keypad_button"),
+                shape = RoundedCornerShape(24.dp),
+                border = ButtonDefaults.outlinedButtonBorder.copy(brush = androidx.compose.ui.graphics.SolidColor(CardBorderGray)),
+                colors = ButtonDefaults.outlinedButtonColors(containerColor = PureWhite)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Dialpad,
+                    contentDescription = "Keypad",
+                    tint = SolidBlack,
+                    modifier = Modifier.size(18.dp)
+                )
+                Spacer(modifier = Modifier.width(6.dp))
+                Text(text = "Keypad", color = SolidBlack, fontWeight = FontWeight.Bold)
+            }
+
             OutlinedButton(
                 onClick = { onSnooze(10) },
                 modifier = Modifier
                     .weight(1f)
-                    .height(50.dp)
+                    .height(48.dp)
                     .testTag("snooze_10m_active_button"),
-                shape = RoundedCornerShape(25.dp),
+                shape = RoundedCornerShape(24.dp),
                 border = ButtonDefaults.outlinedButtonBorder.copy(brush = androidx.compose.ui.graphics.SolidColor(CardBorderGray)),
                 colors = ButtonDefaults.outlinedButtonColors(containerColor = PureWhite)
             ) {
@@ -822,20 +847,16 @@ fun ActiveCallActionButtons(
                     modifier = Modifier.size(18.dp)
                 )
                 Spacer(modifier = Modifier.width(6.dp))
-                Text(
-                    text = "Snooze 10m",
-                    color = SolidBlack,
-                    fontWeight = FontWeight.SemiBold
-                )
+                Text(text = "Snooze 10m", color = SolidBlack, fontWeight = FontWeight.Bold)
             }
 
             OutlinedButton(
                 onClick = onEndCall,
                 modifier = Modifier
                     .weight(1f)
-                    .height(50.dp)
+                    .height(48.dp)
                     .testTag("end_call_button"),
-                shape = RoundedCornerShape(25.dp),
+                shape = RoundedCornerShape(24.dp),
                 border = ButtonDefaults.outlinedButtonBorder.copy(brush = androidx.compose.ui.graphics.SolidColor(SolidBlack)),
                 colors = ButtonDefaults.outlinedButtonColors(containerColor = PureWhite)
             ) {
@@ -846,11 +867,95 @@ fun ActiveCallActionButtons(
                     modifier = Modifier.size(18.dp)
                 )
                 Spacer(modifier = Modifier.width(6.dp))
+                Text(text = "End", color = SolidBlack, fontWeight = FontWeight.Bold)
+            }
+        }
+    }
+
+    if (showDialpad) {
+        DialpadDialog(onDismiss = { showDialpad = false }) { digit ->
+            Toast.makeText(context, "DTMF: $digit pressed", Toast.LENGTH_SHORT).show()
+        }
+    }
+}
+
+@Composable
+fun DialpadDialog(onDismiss: () -> Unit, onNumberPressed: (String) -> Unit) {
+    var dialedDigits by remember { mutableStateOf("") }
+    val context = LocalContext.current
+
+    androidx.compose.ui.window.Dialog(onDismissRequest = onDismiss) {
+        Card(
+            modifier = Modifier.fillMaxWidth().padding(16.dp),
+            shape = RoundedCornerShape(24.dp),
+            colors = CardDefaults.cardColors(containerColor = LiquidGlassSurface),
+            border = CardDefaults.outlinedCardBorder().copy(brush = androidx.compose.ui.graphics.SolidColor(LiquidGlassBorder))
+        ) {
+            Column(
+                modifier = Modifier.padding(24.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
                 Text(
-                    text = "End Call",
-                    color = SolidBlack,
-                    fontWeight = FontWeight.SemiBold
+                    text = "Keypad",
+                    style = androidx.compose.material3.MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.Bold,
+                    color = SolidBlack
                 )
+                Spacer(modifier = Modifier.height(12.dp))
+                Text(
+                    text = dialedDigits.ifBlank { "Press key..." },
+                    style = androidx.compose.material3.MaterialTheme.typography.headlineMedium,
+                    fontWeight = FontWeight.ExtraBold,
+                    color = SophisticatedBlue,
+                    textAlign = TextAlign.Center
+                )
+                Spacer(modifier = Modifier.height(20.dp))
+
+                val rows = listOf(
+                    listOf("1", "2", "3"),
+                    listOf("4", "5", "6"),
+                    listOf("7", "8", "9"),
+                    listOf("*", "0", "#")
+                )
+
+                rows.forEach { row ->
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceEvenly
+                    ) {
+                        row.forEach { digit ->
+                            Box(
+                                contentAlignment = Alignment.Center,
+                                modifier = Modifier
+                                    .size(64.dp)
+                                    .clip(CircleShape)
+                                    .background(PureWhite)
+                                    .border(1.dp, CardBorderGray, CircleShape)
+                                    .clickable {
+                                        dialedDigits += digit
+                                        onNumberPressed(digit)
+                                    }
+                            ) {
+                                Text(
+                                    text = digit,
+                                    fontSize = 24.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    color = SolidBlack
+                                )
+                            }
+                        }
+                    }
+                    Spacer(modifier = Modifier.height(12.dp))
+                }
+
+                Spacer(modifier = Modifier.height(12.dp))
+                OutlinedButton(
+                    onClick = onDismiss,
+                    shape = RoundedCornerShape(50),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text("Close Keypad", fontWeight = FontWeight.Bold, color = SolidBlack)
+                }
             }
         }
     }

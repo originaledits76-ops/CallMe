@@ -2,32 +2,46 @@ package com.example.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-// Pure two-tone minimalist palette: White background, Black text & accents
+// CallMinder Design System Colors (matching provided mockup)
+val BackgroundColor = Color(0xFFF8F9FF)
 val PureWhite = Color(0xFFFFFFFF)
-val OffWhite = Color(0xFFF9FAFB)
-val SoftGraySurface = Color(0xFFF2F4F7)
-val CardBorderGray = Color(0xFFE5E7EB)
+val SurfaceCard = Color(0xFFFFFFFF)
+val SurfaceContainer = Color(0xFFE5EEFF)
+val SurfaceContainerLow = Color(0xFFEFF4FF)
+val InputBackground = Color(0xFFF9FAFB)
 
-val SolidBlack = Color(0xFF000000)
-val CharcoalBlack = Color(0xFF111827)
-val MutedTextGray = Color(0xFF6B7280)
-val SubtleIconGray = Color(0xFF9CA3AF)
+val PrimaryText = Color(0xFF0B1C30)
+val DarkNeutral = Color(0xFF111827)
+val BrandNavy = Color(0xFF0B1C30)
+val SecondaryText = Color(0xFF6B7280)
+val SubtleText = Color(0xFF9CA3AF)
 
-// Sophisticated Blue Palette (Apple System Blue / Luxury Sapphire)
-val SophisticatedBlue = Color(0xFF007AFF)
-val SophisticatedBlueDark = Color(0xFF005ECB)
-val SophisticatedBlueGlow = Color(0x33007AFF)
-val SophisticatedBlueSoft = Color(0xFFEFF6FF)
-val SophisticatedBlueBorder = Color(0x4D007AFF)
+val BorderLight = Color(0xFFE2E6F0)
+val BorderSubtle = Color(0xFFECEFF5)
+
+val EmeraldGreen = Color(0xFF10B981)
+val EmeraldDark = Color(0xFF059669)
+
+val SophisticatedBlue = Color(0xFF4E45D5) // Indigo / Secondary brand
+val SophisticatedBlueSoft = Color(0xFFEEF2FF)
 
 // Liquid Glass & Frosted Materials
-val LiquidGlassBackground = Color(0xEEFFFFFF) // 93% translucent white for frosted navigation & cards
+val LiquidGlassBackground = Color(0xE8FFFFFF)
 val LiquidGlassSurface = Color(0xF2F8FAFD)
-val LiquidGlassBorder = Color(0x1F000000) // Crisp glass border
-val LiquidGlassHighlight = Color(0xCCFFFFFF) // Specular top rim
+val LiquidGlassBorder = Color(0x1F000000)
+val LiquidGlassHighlight = Color(0xCCFFFFFF)
 
-// Dark mode inverse support
+// Backwards compatibility tokens
+val SoftGraySurface = Color(0xFFF9FAFB)
+val CardBorderGray = Color(0xFFE2E6F0)
+val SolidBlack = Color(0xFF111827)
+val CharcoalBlack = Color(0xFF0B1C30)
+val MutedTextGray = Color(0xFF6B7280)
+val SubtleIconGray = Color(0xFF9CA3AF)
+val SophisticatedBlueGlow = Color(0x334E45D5)
+val SophisticatedBlueBorder = Color(0x4D4E45D5)
 val DarkBackground = Color(0xFF0B0F17)
 val DarkSurface = Color(0xFF181E29)
 val DarkBorder = Color(0xFF2E384D)
 val DarkTextMuted = Color(0xFF94A3B8)
+val OffWhite = Color(0xFFF8F9FF)
